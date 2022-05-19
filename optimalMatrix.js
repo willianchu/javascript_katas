@@ -6,33 +6,29 @@ const matrix = [
 ]
 
 function biggerChunkFirst (arr) {
-  const median = (Math.abs(arr.length / 2) - 1);
+  const indexSize = arr.length - 1;
   let a = 0;
   let b = 0;
-  for (let index in arr) {
-    if (index<=median) {
-      a += arr[index];
-    } else {
-      b += arr[index];
-    }
+  let i = 0;
+  while (i < (indexSize - i)) {
+    a += arr[i];
+    b += arr[indexSize - i];
+    i++;
   }
   return a > b ? arr : arr.reverse();
 }
 
 function reverseBigColumns (matrix) {
-  let answer = [];
-  for (let line of matrix){
-    answer.push(biggerChunkFirst(line));
-  }
-  return answer;
+  return matrix.map(line => {
+    return (biggerChunkFirst(line));
+  });
+  
 } 
 
 function rotateRight (matrix){
-  const emptyLine = new Array(matrix.lenght).fill(0);
-  const rotated = new Array(matrix[0].length).fill(1).map(()=> [...emptyLine]);
-  console.log(rotated);
-  for (let column = 0; column < matrix[0].length; column++){
-    for (let line = 0; line < matrix.length; line++) {
+  const rotated = new Array(matrix[0].length).fill(1).map(()=> Array(matrix.lenght).fill(0));
+  for (let column in matrix[0]) {
+    for (let line in matrix) {
       rotated[column][line] = matrix[line][column];
     }
   }
@@ -40,9 +36,7 @@ function rotateRight (matrix){
 }
 
 function game(matrix){
-  const answer1 = reverseBigColumns(matrix)
-  const answer2 = rotateRight(answer1);
-  const answer3 = reverseBigColumns(answer2);
+  const answer3 = reverseBigColumns(rotateRight(reverseBigColumns(matrix)));
   let total = 0;
   for (let c = 0; c < (answer3[0].length/2); c++){
     for (let l = 0; l < (answer3.length/2); l++){
