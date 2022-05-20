@@ -1,9 +1,18 @@
+// const matrix = [
+//   [ 119, 56, 43, 108 ],
+//   [ 114, 101, 125, 83 ],
+//   [ 98, 78, 56, 42 ],
+//   [112, 49, 15, 62]
+// ]
+
+
 const matrix = [
-  [1,2,3,4],
-  [5,6,7,8],
-  [11,12,13,14],
-  [25,26,7,8]
+  [ 112, 42, 83, 119 ],
+  [ 56, 125, 56, 49 ],
+  [ 15, 78, 101, 43 ],
+  [62, 98, 114, 108]
 ]
+
 
 function biggerChunkFirst (arr) {
   const indexSize = arr.length - 1;
@@ -36,13 +45,19 @@ function rotateRight (matrix){
 }
 
 function game(matrix){
-  const answer3 = reverseBigColumns(rotateRight(reverseBigColumns(matrix)));
+  const answer1 = rotateRight((matrix));
+  console.log(answer1);
+  const answer2 = reverseBigColumns(answer1);
+  console.log(answer2);
+  const answer2a = rotateRight(answer2);
+  const answer3 = reverseBigColumns(answer2a);
   let total = 0;
   for (let c = 0; c < (answer3[0].length/2); c++){
     for (let l = 0; l < (answer3.length/2); l++){
       total += answer3[l][c];
     }
   }
+  console.log(answer3);
   return total;
 }
 
