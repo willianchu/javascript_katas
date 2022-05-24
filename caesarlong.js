@@ -7,11 +7,18 @@ function caesarCipher(s, k) {
   return answer;
 }
 
-function cypherLetter(chr,dis){ 
+function cypherLetter(chr,d){
+  while (d > 26){
+    d -= 26;
+  }
+  let dis = d;
   let alphabet = "abcdefghijklmnopqrstuvwxyz";
-  if (chr.isUpperCase()){
+  if (chr.toUpperCase() === chr){
     alphabet = alphabet.toUpperCase();
   }
+  // if (isNaN(chr)){
+  //   alphabet = "1234567890";
+  // }
   let answer = "";
   let size = alphabet.length - 1;
   let dislocation = 0;
@@ -20,9 +27,11 @@ function cypherLetter(chr,dis){
   for (let i in alphabet){
       if (alphabet[i] == chr) {
           dislocation = parseInt(i) + dis;
-          console.log(i,dis);
-          newPosition = dislocation <= size ? dislocation : (dislocation - size - 1)
-          console.log([newPosition]);
+          if (dislocation > size && dislocation > 0){
+          newPosition = dislocation <= size ? dislocation : (while (dislocation > size) { dislocation dislocation - size - 1); });
+          } else {
+          newPosition = dislocation <= size ? dislocation : (dislocation - size)
+          }
           answer = alphabet[newPosition];
           found = true;
           break;
@@ -32,3 +41,4 @@ function cypherLetter(chr,dis){
 }
 
 console.log(caesarCipher("xyz", 2));	// "zab"
+console.log(caesarCipher("xyz", -2));	// "yza"
