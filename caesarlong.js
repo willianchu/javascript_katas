@@ -8,7 +8,10 @@ function caesarCipher(s, k) {
 }
 
 function cypherLetter(chr,dis){ 
-  const alphabet = "abcdefghijklmnopqrstuvwxyz";
+  let alphabet = "abcdefghijklmnopqrstuvwxyz";
+  if (chr.isUpperCase()){
+    alphabet = alphabet.toUpperCase();
+  }
   let answer = "";
   let size = alphabet.length - 1;
   let dislocation = 0;
