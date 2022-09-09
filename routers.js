@@ -5,7 +5,7 @@ function getServedBuildings(buildingCount, routerLocation, routerRange) {
   
   // Mount Router Count
   for (let IdxRouter in routerLocation){
-      position = (routerLocation[IdxRouter]-1); //ok
+      position = (routerLocation[IdxRouter]-1);
       RouterCount[position] = RouterCount[position] === 0 ? 1 : RouterCount[position] + 1;
       range = routerRange[IdxRouter];      
       for (let signal = 0; signal <= range; signal++){
@@ -24,10 +24,8 @@ function getServedBuildings(buildingCount, routerLocation, routerRange) {
   // Count Served Buildings
   let served = 0;
   for (let idx in buildingCount) {
-    console.log(buildingCount[idx], RouterCount[idx]);
-      if (buildingCount[idx] <= RouterCount[idx]) served++;
+    if (buildingCount[idx] <= RouterCount[idx]) served++;
   }
-  console.log(RouterCount);
   return served;
   
 }
@@ -44,7 +42,6 @@ const routerRange = [
   7, 0, 0, 2, 5,
   2, 6, 1, 3
 ];
-
 
 console.log(getServedBuildings(buildingCount, routerLocation, routerRange)
 );

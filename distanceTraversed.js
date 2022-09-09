@@ -11,20 +11,25 @@ function distanceTraversed(lot) {
           }
       }
   }
+  console.log("9 position: ", linePosition, columnPosition);
   let moves = 0;
-  while (linePosition >0 && columnPosition > 0){
+  while (lot[linePosition][columnPosition]!==2){
       // try left 
       if ((columnPosition - 1 > 0) && (lot[linePosition][columnPosition - 1] === 1)){
+          console.log("left");
           moves ++;
           columnPosition--;
       }else if(linePosition > 0 && (lot[linePosition - 1][columnPosition] === 1)){ // try up
+          console.log("up");
           moves ++;
           linePosition--;           
       }else { // undo go up
-          while ((lot[linePosition - 1][columnPosition] != 1)) {
+        while ((lot[linePosition - 1][columnPosition] != 1)) {
+            console.log("right");
               moves --;
               columnPosition ++;    
           }
+          console.log("up");
           linePosition --;
           moves++;
       } 
@@ -33,15 +38,11 @@ function distanceTraversed(lot) {
 }
 
 const lot = [
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 1, 1, 0, 1, 1, 1, 1, 1, 1],
-  [1, 0, 0, 1, 1, 1, 1, 1, 1, 1],
-  [0, 1, 1, 1, 9, 1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+  [1, 0, 1, 1, 1],
+  [1, 1, 1, 0, 1],
+  [1, 0, 1, 0, 1],
+  [1, 0, 0, 0, 1],
+  [1, 1, 1, 1, 9]
 ];
 
 
