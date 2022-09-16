@@ -1,12 +1,7 @@
 function sockMerchant(n, ar) {
   const inventory = {}
   ar.forEach( color => {
-    if(inventory[color]){
-      inventory[color] ++;
-    } else {
-      console.log("new color: ",color);
-      inventory[color] = 1;
-    }
+    inventory[color] = inventory[color] ? ++inventory[color] : 1;
   })
   
   return Object.keys(inventory).reduce( (total, key) =>{
