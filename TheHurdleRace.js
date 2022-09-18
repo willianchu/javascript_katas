@@ -1,5 +1,7 @@
 function hurdleRace(k, height) {
-  // Write your code here
+  height.sort((a,b)=>b-a);
+  const doses = height[0] - k;
+  return doses < 1 ? 0 : doses;
 
 }
 
