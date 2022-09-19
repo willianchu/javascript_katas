@@ -1,26 +1,26 @@
 function appendAndDelete(s, t, k) {
   let stringA = s;
   let stringB = t;
-  let stringShared = "";
   for(let i in s){
     if(s[i]===t[i]){
       stringA = stringA.slice(1);
       stringB = stringB.slice(1);
-      stringShared += s[i];
     } else {
       break;
     }
   }
-  let sizeShared = stringShared.length;
-  let leftMovements = k - (stringA.length + stringB.length);
-  let answer = "";
-  if(leftMovements < 0) answer = "No"; // no sufficient movements for a basic change
-  if(leftMovements % 2 === 0){
-    answer = leftMovements < (sizeShared * 2) + 1 ? "Yes" : "aNo";
-  } else {
-    answer = leftMovements >= (sizeShared * 2) + 1 ? "Yes" : "No";
+  let operationsLeft = k - (stringA.length + stringB.length);
+  if(operationsLeft === 0) return "Yes"; // just add
+  if(operationsLeft < 0) return "No"; // there is no sufficient moves to add
+  if(s.length === stringA.length){
+     operationsLeft = operationsLeft - 1; //move to set empty array
   }
- return answer;
+  
+  const maxAllowedOperations = ((s.length - stringA.length)*2) + 1;
+  
+  if (maxAllowedOperations === operationsLeft) return "Yes"; // Max chain movements
+
+  return operationsLeft % 2 === 0 ? "Yes" : "No"
 }
 
 let stringA = "aba";
