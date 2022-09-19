@@ -1,29 +1,32 @@
 function appendAndDelete(s, t, k) {
-  let stringA = s;
-  let stringB = t;
-  let stringShared = "";
-  for(let i in s){
-    if(s[i]===t[i]){
-      stringA = stringA.slice(1);
-      stringB = stringB.slice(1);
-      stringShared += s[i];
-    } else {
+  let len_s = s.length;
+  let len_t = t.length;
+  let len_total = len_s + len_t;
+  let idx = 0
+  if (len_total % 2 != 0 && k % 2 == 0 && k < len_total){ //total length Odd && Even moves && moves < total lenght 
+    return "No";
+  }
+  if (len_total % 2 == 0 && k % 2 != 0 && k < len_total){ //total length Even && Odd moves && moves < total lenght 
+    return "No";
+  }
+  let min = len_s < len_t ? len_s : len_t;
+  for(let i = 0 ; i < min; i++){
+    if(s[i] != t[i]){
       break;
+    }else{
+      idx = i + 1;
     }
   }
-  let sizeShared = stringShared.length;
-  let leftMovements = k - (stringA.length + stringB.length);
-  let answer = "";
-  if(leftMovements < 0) answer = "No"; // no sufficient movements for a basic change
-  if(leftMovements % 2 === 0){
-    answer = leftMovements < (sizeShared * 2) + 1 ? "Yes" : "aNo";
+  console.log(idx);
+  let max = len_s > len_t ? len_s : len_t;
+  if ((max - idx + min - idx) <= k){
+    return "Yes";
   } else {
-    answer = leftMovements >= (sizeShared * 2) + 1 ? "Yes" : "No";
+    return "No";
   }
- return answer;
 }
 
-let stringA = "aba";
+let stringA = "aba"; 
 let stringB = "aba";
 let moves = 7;
 
