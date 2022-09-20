@@ -8,6 +8,7 @@ function viralAdvertising(n) {
     cumulative += liked;
     console.log(i,shared,liked,cumulative);
   }
+  return cumulative;
 }
 viralAdvertising(3);
 
