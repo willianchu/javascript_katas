@@ -1,8 +1,12 @@
 function repeatedString(s, n) {
   let qtA = (s.split("").filter(c=> c === 'a')).length;
   let segments = s.length;
-  let answer = n/s*qtA;
-  return answer;
+  let mod = n % segments;
+  let segmentsCount = Math.floor(n / segments) * qtA;
+  for(let i = 0; i <= mod - 1; i++){
+      if(s[i]==='a') segmentsCount++;
+  }
+  return segmentsCount;
 }
 
 let s = "aba";
