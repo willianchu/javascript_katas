@@ -21,7 +21,7 @@ function acmTeam(topic) {
   let maxSize = (Math.max.apply(null, arr.flatMap(e=>  e.length)));
   console.log(" T=",arr.reduce(equalsMax,0));
   return maxSize;
-  function (t,e)=> {
+  function (t,e) => {
     if(e===maxSize){
       return t += 1;
     }
