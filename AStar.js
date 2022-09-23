@@ -20,53 +20,6 @@ let mapSize = {
 };
 
 const findTheShortest = (initialX, initialY, finalX, finalY, map) => {
-
-  const canGoUpDown = (tile, step) => {
-    let upDown = tile.y + step;
-    let xAxis = tile.x;
-    let tileKey = tile.x+"x"+tile.y;
-    if(openList[tileKey]) return {};
-    if(closeList[tileKey]) return {};
-    if(upDown < 0 || upDown > mapSize.maxY) return {};
-    if(map[xAxis][upDown]===BLOCKEDSPACE) return {}
-    if(map[xAxis][upDown]===FINISH) return {'end': true}
-    return {'x': xAxis, 'y': upDown }
-  }
-  const canGoLeftRight = (tile, step) => {
-    let leftRight = tile.x + 1;
-    let yAxis = tile.y;
-    if(openList[tileKey]) return {};
-    if(closeList[tileKey]) return {};
-    if(leftRight < 0 || leftRight > mapSize.maxX ) return {};
-    if(map[down][yAxis]===BLOCKEDSPACE) return {}
-    if(map[down][yAxis]===FINISH) return {'end': true}
-    return {'x': tile.x-1, 'y': tile.y }
-  }
-  const addToOpenList = (position, fatherKey) => {
-    openList[position.x+"x"+position.y] = {
-      'x': position.x,
-      'y': position.y,
-      'father': openList[fatherKey].x +"x"+openList[fatherKey].y,
-      'toStart': openList[fatherKey].toStart + 1,
-      'toFinish': Math.abs(this.x - FINALX) + Math.abs(this.y - FINALY),
-      'cost': this.toStart + this.toFinish
-    };
-  }
-  const getSmallerCost = (list) => {
-    let smallCost = 0;
-    let smallKey = '';
-    for(let key in list){
-      if(list[key].cost < smallCost || smallKey === ''){
-        smallKey = key;
-        smallCost = list[key].cost;
-      }
-    }
-    return smallKey;
-  }
-  const moveToCloseList = (key) => {
-    closeList[key] = openList[key];
-    delete openList[key];
-  }
   
   let FINALX = finalX;
   let FINALY = finalY;
@@ -75,38 +28,102 @@ const findTheShortest = (initialX, initialY, finalX, finalY, map) => {
   openList[initialX+"x"+initialY] = {
     'x': initialX,
     'y': initialY,
+    'father': null,
     'toStart': 0,
     'toFinish': Math.abs(initialX - FINALX) + Math.abs(initialY - FINALY),
-    'cost': this.toStart + this.toFinish
+    'cost': Math.abs(initialX - FINALX) + Math.abs(initialY - FINALY)
   };
-  let nextPosition = {};
+  let nextPosition = {'x': initialX, 'y': initialY};
   let currentPositionKey = initialX+"x"+initialY;
+  console.log("first key", initialX+"x"+initialY);
+  console.log("first tile",openList[initialX+"x"+initialY]);
+
+  const canGoUpDown = (tile, step) => {
+    let upDown = tile.y + step;
+    let xAxis = tile.x;
+    let tileKey = xAxis+"x"+upDown;
+    console.log("if 1");
+    console.log(tileKey);
+    console.log("is in open", openList[tileKey]);
+    if(openList[tileKey]) return {'block': true};
+    console.log("if 2");
+    if(closeList[tileKey]) return {'block': true};
+    console.log("if 3");
+    if(upDown < 0 || upDown > mapSize.maxY) return {'block': true};
+    console.log("if 4");
+    if(map[xAxis][upDown]===BLOCKEDSPACE) return {'block': true}
+    if(map[xAxis][upDown]===FINISH) return {'end': true}
+    return {'x': xAxis, 'y': upDown }
+  }
+  const canGoLeftRight = (tile, step) => {
+    let leftRight = tile.x + step;
+    let yAxis = tile.y;
+    let tileKey = leftRight+"x"+yAxis;
+    if(openList[tileKey]) return {'block': true};
+    if(closeList[tileKey]) return {'block': true};
+    if(leftRight < 0 || leftRight > mapSize.maxX ) return {'block': true};
+    if(map[leftRight][yAxis]===BLOCKEDSPACE) return {'block': true}
+    if(map[leftRight][yAxis]===FINISH) return {'end': true}
+    return {'x': leftRight, 'y': yAxis }
+  }
+  const addToOpenList = (position, fatherKey) => {
+    let start = openList[fatherKey].toStart + 1;
+    let finish = Math.abs(position.x - FINALX) + Math.abs(position.y - FINALY);
+    openList[position.x+"x"+position.y] = {
+      'x': position.x,
+      'y': position.y,
+      'father': openList[fatherKey].x +"x"+openList[fatherKey].y,
+      'toStart': start,
+      'toFinish': finish,
+      'cost': start + finish
+    };
+  }
+  const getSmallerCost = (list) => {
+    let smallCost = 0;
+    let smallKey = '';
+    console.log(list);
+    for(let key in list){
+      if(list[key].cost < smallCost || smallKey === ''){
+        smallKey = key;
+        smallCost = list[key].cost;
+      }
+    }
+    console.log("theSmallKey",smallKey);
+    return smallKey;
+  }
+  const moveToCloseList = (key) => {
+    closeList[key] = openList[key];
+    delete openList[key];
+  }
 
   do{
     let noNewAdd = true;
     nextPosition = canGoUpDown(openList[currentPositionKey],-1);
-    if(nextPosition != {}){
+    console.log("it's you",nextPosition,nextPosition.x);
+    if(nextPosition.block!= true){
       if(nextPosition.end) break;
+      console.log("it's you",nextPosition);
       addToOpenList(nextPosition,currentPositionKey);
       noNewAdd = false;
     }
     console.log("go up",nextPosition);
     nextPosition = canGoUpDown(openList[currentPositionKey],1);
-    if(nextPosition != {}){
+    if(nextPosition.block!= true){
       if(nextPosition.end) break;
+      console.log("it's you??????",nextPosition);
       addToOpenList(nextPosition, currentPositionKey);
       noNewAdd = false;
     }
     console.log("go down",nextPosition);
     nextPosition = canGoLeftRight(openList[currentPositionKey], -1);
-    if(nextPosition != {}){
+    if(nextPosition.block!= true){
       if(nextPosition.end) break;
       addToOpenList(nextPosition, currentPositionKey);
       noNewAdd = false;
     }
     console.log("go left",nextPosition);
     nextPosition = canGoLeftRight(openList[currentPositionKey], 1);
-    if(nextPosition != {}){
+    if(nextPosition.block!= true){
       if(nextPosition.end) break;
       addToOpenList(nextPosition, currentPositionKey);
       noNewAdd = false;
@@ -120,6 +137,7 @@ const findTheShortest = (initialX, initialY, finalX, finalY, map) => {
     currentPositionKey = getSmallerCost(openList);
     console.log("new current position",currentPositionKey);
     console.log("open list",openList);
+    break;
   }while(currentPositionKey != "");
 
   console.log(currentPositionKey);
