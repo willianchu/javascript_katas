@@ -92,11 +92,12 @@ const findTheShortest = (initialX, initialY, finalX, finalY, map) => {
     return smallKey;
   }
   const moveToCloseList = (key) => {
-    closeList[key] = openList[key];
+    closeList[key] = {...openList[key]};
     delete openList[key];
   }
 
   do{
+    console.log("######################## round");
     let noNewAdd = true;
     nextPosition = canGoUpDown(openList[currentPositionKey],-1);
     console.log("it's you",nextPosition,nextPosition.x);
@@ -129,18 +130,33 @@ const findTheShortest = (initialX, initialY, finalX, finalY, map) => {
       noNewAdd = false;
     }
     console.log("go right",nextPosition);
-    if(noNewAdd){
+    console.log("if no ADD --- ",noNewAdd);
+    
+    // if(noNewAdd){
+    //   console.log("dead end");
+    //   break;
+    // }
       moveToCloseList(currentPositionKey);
       console.log("close list",closeList);
-    }
+      currentPositionKey = getSmallerCost(openList);
+      if(currentPositionKey==="") {
+        console.log("Dead end 2");
+        break;
+      }
+      console.log("new current position",currentPositionKey);
+      console.log("open list",openList);
+      console.log("close list",closeList);
     
-    currentPositionKey = getSmallerCost(openList);
-    console.log("new current position",currentPositionKey);
-    console.log("open list",openList);
-    break;
+    console.log("End ######################## round");
+    // break;
   }while(currentPositionKey != "");
 
+  let next = openList[currentPositionKey].father;
   console.log(currentPositionKey);
+  while(next!=null){
+    console.log(next);
+    next = closeList[next].father;
+  }
   return;
 }
 
