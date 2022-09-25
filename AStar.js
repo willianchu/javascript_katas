@@ -35,36 +35,40 @@ const findTheShortest = (initialX, initialY, finalX, finalY, map) => {
   };
   let nextPosition = {'x': initialX, 'y': initialY};
   let currentPositionKey = initialX+"x"+initialY;
-  console.log("first key", initialX+"x"+initialY);
-  console.log("first tile",openList[initialX+"x"+initialY]);
+  // console.log("first key", initialX+"x"+initialY);
+  // console.log("first tile",openList[initialX+"x"+initialY]);
 
   const canGoUpDown = (tile, step) => {
-    let upDown = tile.y + step;
-    let xAxis = tile.x;
-    let tileKey = xAxis+"x"+upDown;
+    console.log("tile",tile)
+    let arrayLine = tile.y + step;
+    let arrayColumn = tile.x;
     console.log("if 1");
+    if(arrayLine < 0 || arrayLine > mapSize.maxY) return {'block': true};
+    let tileKey = arrayColumn+"x"+arrayLine;
     console.log(tileKey);
     console.log("is in open", openList[tileKey]);
-    if(openList[tileKey]) return {'block': true};
     console.log("if 2");
-    if(closeList[tileKey]) return {'block': true};
+    if(openList[tileKey]) return {'block': true};
     console.log("if 3");
-    if(upDown < 0 || upDown > mapSize.maxY) return {'block': true};
-    console.log("if 4");
-    if(map[xAxis][upDown]===BLOCKEDSPACE) return {'block': true}
-    if(map[xAxis][upDown]===FINISH) return {'end': true}
-    return {'x': xAxis, 'y': upDown }
+    if(closeList[tileKey]) return {'block': true};
+    console.log("if 4",map[arrayLine][arrayColumn],map[arrayLine][arrayColumn]===1);
+    if(map[arrayLine][arrayColumn]===BLOCKEDSPACE) {
+      console.log("Block if 1");
+      return {'block': true}
+    }
+    if(map[arrayLine][arrayColumn]===FINISH) return {'end': true}
+    return {'x': arrayColumn, 'y': arrayLine }
   }
   const canGoLeftRight = (tile, step) => {
-    let leftRight = tile.x + step;
-    let yAxis = tile.y;
-    let tileKey = leftRight+"x"+yAxis;
+    let arrayColumn = tile.x + step;
+    let arrayLine = tile.y;
+    let tileKey = arrayColumn+"x"+arrayLine;
     if(openList[tileKey]) return {'block': true};
     if(closeList[tileKey]) return {'block': true};
     if(leftRight < 0 || leftRight > mapSize.maxX ) return {'block': true};
-    if(map[leftRight][yAxis]===BLOCKEDSPACE) return {'block': true}
-    if(map[leftRight][yAxis]===FINISH) return {'end': true}
-    return {'x': leftRight, 'y': yAxis }
+    if(map[arrayLine][arrayColumn]===BLOCKEDSPACE) return {'block': true}
+    if(map[arrayLine][arrayColumn]===FINISH) return {'end': true}
+    return {'x': arrayColumn, 'y': arrayLine }
   }
   const addToOpenList = (position, fatherKey) => {
     let start = openList[fatherKey].toStart + 1;
@@ -81,14 +85,14 @@ const findTheShortest = (initialX, initialY, finalX, finalY, map) => {
   const getSmallerCost = (list) => {
     let smallCost = 0;
     let smallKey = '';
-    console.log(list);
+    // console.log(list);
     for(let key in list){
       if(list[key].cost < smallCost || smallKey === ''){
         smallKey = key;
         smallCost = list[key].cost;
       }
     }
-    console.log("theSmallKey",smallKey);
+    // console.log("theSmallKey",smallKey);
     return smallKey;
   }
   const moveToCloseList = (key) => {
@@ -100,52 +104,55 @@ const findTheShortest = (initialX, initialY, finalX, finalY, map) => {
     console.log("######################## round");
     let noNewAdd = true;
     nextPosition = canGoUpDown(openList[currentPositionKey],-1);
-    console.log("it's you",nextPosition,nextPosition.x);
+    // console.log("it's you",nextPosition,nextPosition.x);
     if(nextPosition.block!= true){
       if(nextPosition.end) break;
-      console.log("it's you",nextPosition);
+      // console.log("it's you",nextPosition);
       addToOpenList(nextPosition,currentPositionKey);
       noNewAdd = false;
     }
-    console.log("go up",nextPosition);
+    // console.log("go up",nextPosition);
     nextPosition = canGoUpDown(openList[currentPositionKey],1);
-    if(nextPosition.block!= true){
+    console.log("block",nextPosition.block,nextPosition.block!=true);
+    if(nextPosition.block != true){
       if(nextPosition.end) break;
-      console.log("it's you??????",nextPosition);
+      console.log("Recording >>>>>>",nextPosition);
       addToOpenList(nextPosition, currentPositionKey);
       noNewAdd = false;
     }
-    console.log("go down",nextPosition);
+    // console.log("go down",nextPosition);
+
     nextPosition = canGoLeftRight(openList[currentPositionKey], -1);
     if(nextPosition.block!= true){
       if(nextPosition.end) break;
       addToOpenList(nextPosition, currentPositionKey);
       noNewAdd = false;
     }
-    console.log("go left",nextPosition);
+    
+    // console.log("go left",nextPosition);
     nextPosition = canGoLeftRight(openList[currentPositionKey], 1);
     if(nextPosition.block!= true){
       if(nextPosition.end) break;
       addToOpenList(nextPosition, currentPositionKey);
       noNewAdd = false;
     }
-    console.log("go right",nextPosition);
-    console.log("if no ADD --- ",noNewAdd);
+    // console.log("go right",nextPosition);
+    // console.log("if no ADD --- ",noNewAdd);
     
     // if(noNewAdd){
     //   console.log("dead end");
     //   break;
     // }
       moveToCloseList(currentPositionKey);
-      console.log("close list",closeList);
+      // console.log("close list",closeList);
       currentPositionKey = getSmallerCost(openList);
       if(currentPositionKey==="") {
         console.log("Dead end 2");
         break;
       }
-      console.log("new current position",currentPositionKey);
-      console.log("open list",openList);
-      console.log("close list",closeList);
+      // console.log("new current position",currentPositionKey);
+      // console.log("open list",openList);
+      // console.log("close list",closeList);
     
     console.log("End ######################## round");
     // break;
