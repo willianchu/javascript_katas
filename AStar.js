@@ -1,3 +1,5 @@
+// Find the shortest route to exit from a maze. 0 free space; 1 blocked space; 3 start/ end.
+
 let map =[
   [3,0,1,0,0,0,0,0],
   [0,0,0,0,1,1,0,0],
@@ -86,13 +88,9 @@ const findTheShortest = (initialX, initialY, finalX, finalY, map) => {
   const moveToCloseList = (key) => {
     closeList[key] = {...openList[key]};
     delete openList[key];
-    console.log("closed >>>>> key",key);
-    console.log("close list",closeList);
-    console.log("open list",openList);
   }
 
   do{
-    console.log("######################## round");
     let noNewAdd = true;
     nextPosition = canGoUpDown(openList[currentPositionKey],-1);
     if(nextPosition.block!= true){
@@ -113,12 +111,9 @@ const findTheShortest = (initialX, initialY, finalX, finalY, map) => {
     
     nextPosition = canGoLeftRight(openList[currentPositionKey], 1);
     if(nextPosition.block!= true){
-      // if(nextPosition.end) break;
       addToOpenList(nextPosition, currentPositionKey);
       noNewAdd = false;
     }
-    console.log("nextposition", nextPosition);
-    console.log("current", currentPositionKey);
     moveToCloseList(currentPositionKey);
     if(nextPosition.end) {
       currentPositionKey = finalX+"x"+finalY;
@@ -134,11 +129,12 @@ const findTheShortest = (initialX, initialY, finalX, finalY, map) => {
 
   
   let next = currentPositionKey;
+  let route = [];
   while(next!=null){
-    console.log(next);
+    route.push(next);
     next = closeList[next].father;
   }
-  return;
+  return route;
 }
 
-findTheShortest(0,0,7,7,map);
+console.log(findTheShortest(0,0,7,7,map));
