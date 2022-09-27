@@ -7,11 +7,12 @@ function howManyGames(p, d, m, s) {
   let units = 0;
   let salePrice = p;
   let budget = s;
-  while(salePrice > m){
-    let trySale = budget - salePrice;
-    if(trySale<0) break;
-    salePrice -= d;
+  while(true){
+    budget -= salePrice;
+    salePrice = (salePrice - d) < m ? m : salePrice - d;
+    if(budget < 0) break;
     units++;
+    console.log(budget, salePrice, units);
   }
   return units;
 }
