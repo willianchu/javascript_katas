@@ -16,7 +16,7 @@ let map =[
 let FINISH = 3;
 let FREESPACE = 0;
 let BLOCKEDSPACE = 1;
-let mapSize = {
+let MAPSIZE = {
   'maxX': map[0].length - 1,
   'maxY': map.length - 1
 };
@@ -41,7 +41,7 @@ const findTheShortest = (initialX, initialY, finalX, finalY, map) => {
   const canGoUpDown = (tile, step) => {
     let arrayLine = tile.y + step;
     let arrayColumn = tile.x;
-    if(arrayLine < 0 || arrayLine > mapSize.maxY) return {'block': true};
+    if(arrayLine < 0 || arrayLine > MAPSIZE.maxY) return {'block': true};
     let tileKey = arrayColumn+"x"+arrayLine;
     if(openList[tileKey]) return {'block': true};
     if(closeList[tileKey]) return {'block': true};
@@ -56,7 +56,7 @@ const findTheShortest = (initialX, initialY, finalX, finalY, map) => {
     let tileKey = arrayColumn+"x"+arrayLine;
     if(openList[tileKey]) return {'block': true};
     if(closeList[tileKey]) return {'block': true};
-    if(arrayColumn < 0 || arrayColumn > mapSize.maxX ) return {'block': true};
+    if(arrayColumn < 0 || arrayColumn > MAPSIZE.maxX ) return {'block': true};
     if(map[arrayLine][arrayColumn]===BLOCKEDSPACE) return {'block': true}
     let answer = {'x': arrayColumn, 'y': arrayLine};
     if(map[arrayLine][arrayColumn]===FINISH) answer['end'] = true;
