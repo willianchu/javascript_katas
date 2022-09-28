@@ -5,28 +5,24 @@
 function chocolateFeast(n, c, m) {
   let budget = n;
   let price = c;
-  let returnedPack = m;
+  let qtForBonus = m;
   let chocolatesEaten = 0;
-  let newChocolates = 0;
-  let bonus = 0;
+  let closedPackets = 0;
+  let bonusBars = 0;
+  let consumed = 0;
 
-
-  newChocolates = Math.floor( budget / price ); // bought chocolates
-  console.log(newChocolates);
-  do{
-  console.log("###############");
-  bonus = Math.floor(newChocolates / returnedPack); // how many extra chocolates
-  console.log( "bonus", bonus);
-  chocolatesEaten = Math.floor( newChocolates % returnedPack );
-  console.log("eaten",chocolatesEaten);
-  newChocolates = newChocolates - chocolatesEaten 
-  console.log( "new", newChocolates );
-  }while(newChocolates >= returnedPack)
-
+  closedPackets = Math.floor( budget / price );
   
-  return chocolatesEaten;
+  do{
+    bonusBars = Math.floor(closedPackets / qtForBonus); 
+    consumed  = qtForBonus * bonusBars; 
+    closedPackets = closedPackets - consumed  + bonusBars;
+    chocolatesEaten += consumed ;
+  }while(closedPackets >= qtForBonus);
+  
+  return chocolatesEaten + closedPackets;
 }
 
-// console.log(chocolateFeast(10,2,5));
-// console.log(chocolateFeast(12,4,4));
+console.log(chocolateFeast(10,2,5));
+console.log(chocolateFeast(12,4,4));
 console.log(chocolateFeast(6,2,2));
