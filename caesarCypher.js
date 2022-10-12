@@ -1,41 +1,14 @@
-function caesarCipher(message,k){
-  
-  let answer = "";
-  for (let i in message){
-    answer += cypherLetter(message[i],valid(k)); 
-  }
-  return answer;
+function caesarCipher(s, k) {
+    let result = "";
+    for (let i = 0; i < s.length; i++) {
+        let code = s.charCodeAt(i);
+        if (code >= 65 && code <= 90) {
+            result += String.fromCharCode(((code - 65 + k) % 26) + 65);
+        } else if (code >= 97 && code <= 122) {
+            result += String.fromCharCode(((code - 97 + k) % 26) + 97);
+        } else {
+            result += s[i];
+        }
+    }
+    return result;
 }
-
-function valid(k){
-  while (k > 26){
-    k -= 26;
-  }
-  return k;
-}
-
-function cypherLetter(chr,d){
-  let alphabet = "abcdefghijklmnopqrstuvwxyz";
-  if (chr.toUpperCase() === chr){
-    alphabet = alphabet.toUpperCase();
-  }
-  let answer = "";
-  let size = alphabet.length - 1;
-  let dislocation = 0;
-  let newPosition = 0;
-  let found = false;
-  for (let i in alphabet){
-      if (alphabet[i] == chr) {
-          dislocation = parseInt(i) + d;
-          newPosition = dislocation <= size ? dislocation : (dislocation - size - 1);
-          newPosition = newPosition < 0 ? newPosition + size : newPosition;
-          answer = alphabet[newPosition];
-          found = true;
-          break;
-      }
-  }
-  return found ? answer : chr;
-}
-
-console.log(caesarCipher("xyz", 2));	// "zab"
-console.log(caesarCipher("ABC", -2));	
