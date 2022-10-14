@@ -6,7 +6,7 @@ function cavityMap(grid) {
       newMap[line] = grid[line][0];
       for(let column = 1; column <  grid[line].length-1; column++ ){
         xValue = grid[line][column];
-        console.log(xValue, line, column);
+        
         if(grid[line][column-1] < xValue 
           && grid[line][column+1] < xValue 
           && grid[line-1][column] < xValue 
