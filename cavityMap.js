@@ -15,8 +15,8 @@ function cavityMap(grid) {
           } else {
             newMap[line] +=  xValue;
           }
-          newMap[line] += grid[line][column+1];
-      }
+        }
+        newMap[line] += grid[line][grid.length-1];
     }
     newMap[grid.length-1] = grid[grid.length-1];
     return newMap;
