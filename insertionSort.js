@@ -1,21 +1,31 @@
-function insertionSort (ar) {
-
-  for(i = 1; i < ar.length; i++){
-      var value = ar[i];
-      var j = i - 1;
-      while(ar[j] > value){
-        ar[i] = ar[j];
-        ar[j] = value;
-      }
-      ar[j + 1] = value;
+function sortInsertionLast (n, arr){
+  const zeroIndexLength = n;
+  const putItInOrder = arr[zeroIndexLength];
+  let lastIndex = 0;
+  for(let i=zeroIndexLength-1; i >= 0; i--){
+    if(putItInOrder < arr[i]){
+      arr[i+1] = arr[i];
+    } else {
+      lastIndex = i+1;
+      break;
     }
-    return ar;
   }
+  arr[lastIndex] = putItInOrder;
+}
+
+function insertionSort(arr) {
+  let  n = arr.length;
+  for(let i = 1; i < n; i++){
+    sortInsertionLast(i,arr);
+    console.log(...arr);
+  }
+  return arr;
+}
    
-  var ar;
+  var arr;
   //get input for ar
-  ar = [5, 2, 4, 6, 1, 3];
-  let sorted = insertionSort(ar);
+  arr = [5, 2, 4, 6, 1, 3];
+  let sorted = insertionSort(arr);
   console.log(sorted);
 
   //print ar
