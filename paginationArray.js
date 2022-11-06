@@ -36,3 +36,5 @@ const paginationArray = (currentPage, totalCount, pageSize) => {
   }
   return pageArray;
 };
+
+console.log(paginationArray(currentPage, totalCount, pageSize));
