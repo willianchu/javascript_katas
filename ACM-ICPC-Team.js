@@ -11,25 +11,25 @@ function bin2dec(bin){
   return parseInt(bin,2).toString(10);
 }
 
-function acmTeam(topic) {
-  const arraySize = topic.length-1;
-  let currentCombination = 0;
-  let maxAnswers = 0;
-  let count = 0;
-  for(let i=0; i < arraySize; i++){
-    for(let j=i+1; j <= arraySize; j++){
-      currentCombination = bin2dec(topic[i]) | bin2dec(topic[j]);
-      if ( currentCombination > maxAnswers ){
-        maxAnswers = currentCombination;
-        count = 1; 
-      } else if ( currentCombination === maxAnswers ){
-        count++;
-      }
-    }
-  }
-  const howManyOnes = ( maxAnswers.toString(2).split('1').length-1 );
-  return [howManyOnes, count];
-}
+// function acmTeam(topic) {
+//   const arraySize = topic.length-1;
+//   let currentCombination = 0;
+//   let maxAnswers = 0;
+//   let count = 0;
+//   for(let i=0; i < arraySize; i++){
+//     for(let j=i+1; j <= arraySize; j++){
+//       currentCombination = bin2dec(topic[i]) | bin2dec(topic[j]);
+//       if ( currentCombination > maxAnswers ){
+//         maxAnswers = currentCombination;
+//         count = 1; 
+//       } else if ( currentCombination === maxAnswers ){
+//         count++;
+//       }
+//     }
+//   }
+//   const howManyOnes = ( maxAnswers.toString(2).split('1').length-1 );
+//   return [howManyOnes, count];
+// }
 
 const topic = [
 "1001101111101011011100101100100110111011111011000100111100111110111101011011011100111001100011111010",
@@ -140,24 +140,24 @@ console.log(result);
 
 
 
-// function acmTeam(topic) {
-//   let max = 0;
-//   let count = 0;
-//   for (let i = 0; i < topic.length; i++) {
-//       for (let j = i + 1; j < topic.length; j++) {
-//           let temp = 0;
-//           for (let k = 0; k < topic[i].length; k++) {
-//               if (topic[i][k] == '1' || topic[j][k] == '1') {
-//                   temp++;
-//               }
-//           }
-//           if (temp > max) {
-//               max = temp;
-//               count = 1;
-//           } else if (temp == max) {
-//               count++;
-//           }
-//       }
-//   }
-//   return [max, count];
-// }
+function acmTeam(topic) {
+  let max = 0;
+  let count = 0;
+  for (let i = 0; i < topic.length; i++) {
+      for (let j = i + 1; j < topic.length; j++) {
+          let temp = 0;
+          for (let k = 0; k < topic[i].length; k++) {
+              if (topic[i][k] == '1' || topic[j][k] == '1') {
+                  temp++;
+              }
+          }
+          if (temp > max) {
+              max = temp;
+              count = 1;
+          } else if (temp == max) {
+              count++;
+          }
+      }
+  }
+  return [max, count];
+}
