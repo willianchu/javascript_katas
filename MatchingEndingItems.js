@@ -6,3 +6,5 @@ var Regex_Pattern = /__________/; //Do not delete '/'. Replace __________ with y
 
 // S should consist of only lowercase and uppercase letters (no numbers or symbols). ---> [a-zA-Z]
 // S should end in s. ---> s$
+
+Regex_Pattern = /^[a-zA-Z]*s$/; 
