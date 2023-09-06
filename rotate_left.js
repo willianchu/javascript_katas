@@ -38,6 +38,7 @@ const rotateRight = (array) => {
 }
 
 const rotateLeft = (array) => {
+  console.log('rotateLeft');
   let lines = array.length;
   let columns = array[0].length;
   for(let c = columns - 1; c >= 0; c--) {
