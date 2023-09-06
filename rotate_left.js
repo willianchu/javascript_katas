@@ -58,4 +58,4 @@ const upsideDown = (array) => {
   return answer;
 }
 
-console.log(rotate(array, 20));
+console.log(rotate(array, 3));
