@@ -38,12 +38,11 @@ const rotateRight = (array) => {
 }
 
 const rotateLeft = (array) => {
-  console.log('rotateLeft');
   let lines = array.length;
-  let columns = array[0].length;
-  for(let c = columns - 1; c >= 0; c--) {
+  let columns = array[0].length - 1;
+  for(let c = columns; c >= 0; c--) {
     for(let l = 0; l < lines; l++) {
-      answer[c].push(array[lines-l][c]);
+      answer[c].push(array[l][columns - c]);
     }
   }
   return answer;
@@ -59,4 +58,4 @@ const upsideDown = (array) => {
   return answer;
 }
 
-console.log(rotate(array, 1));
+console.log(rotate(array, 20));
