@@ -43,7 +43,7 @@ const rotateLeft = (array) => {
   let columns = array[0].length;
   for(let c = columns - 1; c >= 0; c--) {
     for(let l = 0; l < lines; l++) {
-      answer[c].push(array[l][c]);
+      answer[c].push(array[lines-l][c]);
     }
   }
   return answer;
