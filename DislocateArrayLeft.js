@@ -1,12 +1,13 @@
 function dislocateArrayLeft(arr, n) {
+  let arr2 = arr;
   if (n < 0) {
-    return arr;
+    return arr2;
   }
   for (let i = 0; i < n; i++) {
-    arr.push(arr.shift());
-    console.log(arr);
+    arr.push(arr2.shift());
+    console.log(arr2);
   }
-  return arr;
+  return arr2;
 }
 
 function dislocateArrayLeftMathematically (arr, n) {
@@ -15,12 +16,12 @@ function dislocateArrayLeftMathematically (arr, n) {
   }
   let len = arr.length;
   let arr2 = [];
-  arr2 = arr.slice(n, len);
-  arr2 = arr2.concat(arr.slice(0, n));
+  arr2 = arr.slice(0, len);
+  console.log("first leg",n,len,arr2);
   return arr2;
 }
 
-let arr = ["a", "b", "c", "d", "e", "f", "g", "h"];
+let arr = ["a", "b", "c", "d", "e"];
 console.log("common function");
 console.log(dislocateArrayLeft(arr, 2));
 console.log("mathematical function");
